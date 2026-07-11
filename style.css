@@ -944,6 +944,67 @@ body.nav-open { overflow: hidden; }
     .contact-console-log { min-height: 0; }
 }
 
+/* Contact section: compact everything so it fits a phone screen
+   with far less scrolling (smaller padding, tighter type, denser
+   spacing on the console log and the 3 channel buttons) */
+@media (max-width: 600px) {
+    #contact {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    #contact .section-title {
+        font-size: 1.4rem;
+        margin-bottom: 1.2rem;
+    }
+    .contact-terminal-card {
+        padding: 1rem;
+    }
+    .contact-grid-layout {
+        gap: 1.2rem;
+    }
+    .contact-console-log {
+        padding: 1rem;
+        font-size: 0.78rem;
+        gap: 0;
+    }
+    .console-header {
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.6rem;
+    }
+    .console-body {
+        gap: 0.4rem;
+    }
+    .console-interactive-hint {
+        padding: 0.4rem;
+        font-size: 0.7rem;
+        margin-top: 0.8rem;
+    }
+    .contact-channels h3 {
+        font-size: 1.15rem;
+        margin-bottom: 0.3rem;
+    }
+    .channel-desc {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+    .channel-matrix-grid {
+        gap: 0.6rem;
+    }
+    .channel-link {
+        padding: 0.7rem 1rem;
+        gap: 0.8rem;
+    }
+    .channel-icon {
+        font-size: 1.05rem;
+    }
+    .channel-title {
+        font-size: 0.9rem;
+    }
+    .channel-detail {
+        font-size: 0.75rem;
+    }
+}
+
 /* Resume card: full-width download button once it wraps to its own row */
 @media (max-width: 700px) {
     .resume-card { justify-content: center; text-align: center; }
