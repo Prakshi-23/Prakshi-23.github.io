@@ -397,25 +397,6 @@ if (navLinkEls.length && window.IntersectionObserver) {
     navSections.forEach(section => spyObserver.observe(section));
 }
 
-// BACK TO TOP CONTROLLER ENGINE (BOTTOM LEFT CORNER)
-const scrollTopBtn = document.getElementById('scrollTopBtn');
-if (scrollTopBtn) {
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            scrollTopBtn.classList.add('visible');
-        } else {
-            scrollTopBtn.classList.remove('visible');
-        }
-    }, { passive: true });
-
-    scrollTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-}
-
 /* ============================================================
    PROJECT CARD PREVIEW ENGINE
    Hover a card (or, on the 4-image card, a specific dashboard link)
