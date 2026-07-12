@@ -4,11 +4,11 @@
 const bgCanvas = document.getElementById('bg-particles');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-if (bgCanvas && !prefersReducedMotion) {
+if (bgCanvas) {
     const ctx = bgCanvas.getContext('2d');
     let particles = [];
     let width, height;
-    const ACCENT = '124, 131, 253'; // This translates to your new cyan color (RGB)
+    const ACCENT = '141, 175, 250'; // matches --accent-rgb in style.css
     const DENSITY = 14000; 
     const LINK_DIST = 130;
 
@@ -25,15 +25,10 @@ if (bgCanvas && !prefersReducedMotion) {
         }));
     };
 
-    const step = () => {
+    const drawFrame = () => {
         ctx.clearRect(0, 0, width, height);
 
         particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < 0 || p.x > width) p.vx *= -1;
-            if (p.y < 0 || p.y > height) p.vy *= -1;
-
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${ACCENT}, 0.5)`;
@@ -55,13 +50,33 @@ if (bgCanvas && !prefersReducedMotion) {
                 }
             }
         }
+    };
 
+    const step = () => {
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+        });
+
+        drawFrame();
         requestAnimationFrame(step);
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    requestAnimationFrame(step);
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        if (prefersReducedMotion) drawFrame();
+    });
+
+    if (prefersReducedMotion) {
+        // Respect the user's motion preference: draw one static frame
+        // (particles frozen in place) instead of hiding the background.
+        drawFrame();
+    } else {
+        requestAnimationFrame(step);
+    }
 }
 
 /* ============================================================
