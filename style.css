@@ -91,6 +91,41 @@ h1 span {
     text-shadow: 0 0 15px var(--accent-glow);
 }
 
+h1.hero-title {
+    font-family: var(--body-font);
+    font-size: clamp(2.4rem, 7vw, 4.2rem);
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.hero-line {
+    display: block;
+    background: linear-gradient(100deg, var(--accent) 0%, #E9EEFF 55%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px rgba(var(--accent-rgb), 0.25);
+    opacity: 0;
+    transform: translateY(14px);
+    animation: heroLineIn 0.7s ease forwards;
+}
+
+.hero-line-accent { animation-delay: 0.15s; }
+
+.hero-plus {
+    display: inline-block;
+    font-weight: 500;
+    opacity: 0.55;
+    margin-right: 4px;
+    transform: translateY(-2px);
+}
+
+@keyframes heroLineIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .hero-p {
     font-size: clamp(1rem, 3vw, 1.25rem);
     color: var(--text-muted);
