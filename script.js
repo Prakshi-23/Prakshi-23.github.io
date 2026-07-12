@@ -397,33 +397,6 @@ if (navLinkEls.length && window.IntersectionObserver) {
     navSections.forEach(section => spyObserver.observe(section));
 }
 
-// LIGHTBOX COMPONENT CONTROLLER (UPGRADED RESPONSIVE DEPLOYMENT)
-const lightbox = document.getElementById('lightbox-overlay');
-const lightboxImg = document.getElementById('lightbox-img');
-const closeBtn = document.getElementById('lightbox-close-btn');
-
-document.querySelectorAll('.cert-view-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const imgUrl = btn.getAttribute('data-cert');
-        if (lightboxImg) lightboxImg.src = imgUrl;
-        if (lightbox) lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-});
-
-const closeLightbox = () => {
-    if (lightbox) lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-    if (lightboxImg) lightboxImg.src = '';
-};
-
-if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-if (lightbox) {
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLightbox();
-    });
-}
-
 // BACK TO TOP CONTROLLER ENGINE (BOTTOM LEFT CORNER)
 const scrollTopBtn = document.getElementById('scrollTopBtn');
 if (scrollTopBtn) {
