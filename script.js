@@ -60,7 +60,7 @@ if (bgCanvas && !prefersReducedMotion) {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     requestAnimationFrame(step);
-    
+
 // LIGHTBOX COMPONENT CONTROLLER (UPGRADED RESPONSIVE DEPLOYMENT)
 const lightbox = document.getElementById('lightbox-overlay');
 const lightboxImg = document.getElementById('lightbox-img');
