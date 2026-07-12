@@ -1,4 +1,66 @@
+/* MINIMAL AMBIENT BACKGROUND — PARTICLE CONSTELLATION */
+const bgCanvas = document.getElementById('bg-particles');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+if (bgCanvas && !prefersReducedMotion) {
+    const ctx = bgCanvas.getContext('2d');
+    let particles = [];
+    let width, height;
+    const ACCENT = '0, 242, 254';
+    const DENSITY = 14000; 
+    const LINK_DIST = 130;
+
+    const resizeCanvas = () => {
+        width = bgCanvas.width = window.innerWidth;
+        height = bgCanvas.height = window.innerHeight;
+        const count = Math.min(70, Math.floor((width * height) / DENSITY));
+        particles = Array.from({ length: count }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: (Math.random() - 0.5) * 0.25,
+            r: Math.random() * 1.4 + 0.6
+        }));
+    };
+
+    const step = () => {
+        ctx.clearRect(0, 0, width, height);
+
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${ACCENT}, 0.5)`;
+            ctx.fill();
+        });
+
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < LINK_DIST) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(${ACCENT}, ${0.12 * (1 - dist / LINK_DIST)})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        requestAnimationFrame(step);
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    requestAnimationFrame(step);
+    
 // LIGHTBOX COMPONENT CONTROLLER (UPGRADED RESPONSIVE DEPLOYMENT)
 const lightbox = document.getElementById('lightbox-overlay');
 const lightboxImg = document.getElementById('lightbox-img');
@@ -334,69 +396,6 @@ if (navLinkEls.length && window.IntersectionObserver) {
 
     navSections.forEach(section => spyObserver.observe(section));
 }
-
-/* MINIMAL AMBIENT BACKGROUND — PARTICLE CONSTELLATION */
-const bgCanvas = document.getElementById('bg-particles');
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (bgCanvas && !prefersReducedMotion) {
-    const ctx = bgCanvas.getContext('2d');
-    let particles = [];
-    let width, height;
-    const ACCENT = '0, 242, 254';
-    const DENSITY = 14000; 
-    const LINK_DIST = 130;
-
-    const resizeCanvas = () => {
-        width = bgCanvas.width = window.innerWidth;
-        height = bgCanvas.height = window.innerHeight;
-        const count = Math.min(70, Math.floor((width * height) / DENSITY));
-        particles = Array.from({ length: count }, () => ({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            vx: (Math.random() - 0.5) * 0.25,
-            vy: (Math.random() - 0.5) * 0.25,
-            r: Math.random() * 1.4 + 0.6
-        }));
-    };
-
-    const step = () => {
-        ctx.clearRect(0, 0, width, height);
-
-        particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < 0 || p.x > width) p.vx *= -1;
-            if (p.y < 0 || p.y > height) p.vy *= -1;
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${ACCENT}, 0.5)`;
-            ctx.fill();
-        });
-
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < LINK_DIST) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(${ACCENT}, ${0.12 * (1 - dist / LINK_DIST)})`;
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
-                }
-            }
-        }
-
-        requestAnimationFrame(step);
-    };
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    requestAnimationFrame(step);
 
 // LIGHTBOX COMPONENT CONTROLLER (UPGRADED RESPONSIVE DEPLOYMENT)
 const lightbox = document.getElementById('lightbox-overlay');
