@@ -8,7 +8,7 @@ if (bgCanvas && !prefersReducedMotion) {
     const ctx = bgCanvas.getContext('2d');
     let particles = [];
     let width, height;
-    const ACCENT = '77, 182, 172'; // This translates to your new cyan color (RGB)
+    const ACCENT = '124, 131, 253'; // This translates to your new cyan color (RGB)
     const DENSITY = 14000; 
     const LINK_DIST = 130;
 

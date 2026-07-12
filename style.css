@@ -2039,3 +2039,36 @@ body.nav-open { overflow: hidden; }
 @media (max-width: 480px) {
     .image-preview-container { padding: 1rem; }
 }
+
+.hero-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:28px 0;
+}
+
+.pill{
+    padding:10px 18px;
+    border-radius:999px;
+
+    border:1px solid rgba(91,141,239,.25);
+
+    background:rgba(91,141,239,.08);
+
+    color:#dfe8ff;
+
+    font-size:.95rem;
+    font-weight:500;
+
+    transition:.3s ease;
+}
+
+.pill:hover{
+    transform:translateY(-3px);
+
+    background:rgba(91,141,239,.16);
+
+    border-color:#5B8DEF;
+
+    box-shadow:0 0 18px rgba(91,141,239,.18);
+}
