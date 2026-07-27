@@ -363,50 +363,59 @@ header {
 }
 
 /* ============================================================
-   DELAYED HOVER PREVIEW SYSTEM (image centers inside its own card)
+   DELAYED HOVER PREVIEW SYSTEM
+   (dashboard preview centers on the screen, not just the card —
+   sized smaller than the certificate lightbox, responsive on mobile)
    ============================================================ */
 .project-card {
     isolation: isolate;
 }
 
-.image-preview-container {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(1rem, 4vw, 1.75rem);
-    background: rgba(5, 7, 11, 0.94);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-radius: inherit;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.35s ease, visibility 0.35s ease;
-    z-index: 5;
-}
-
-.project-card.show-preview .image-preview-container {
-    opacity: 1;
-    visibility: visible;
-}
-
+/* Source thumbnails inside each card stay invisible; they only supply
+   the image src to the shared overlay below via JS */
 .project-hover-img {
     display: none;
-    max-width: 100%;
-    max-height: 100%;
+}
+
+.project-preview-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 2rem);
+    background: rgba(5, 7, 11, 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.project-preview-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.project-preview-content {
     width: auto;
     height: auto;
+    max-width: min(560px, 88vw);
+    max-height: 55vh;
     object-fit: contain;
     border: 2px solid var(--accent);
     border-radius: 10px;
     background: #0D111A;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    animation: zoomIn 0.25s ease-out;
 }
 
-.project-hover-img.active-preview {
-    display: block;
+@media (max-width: 600px) {
+    .project-preview-content {
+        max-width: 92vw;
+        max-height: 45vh;
+    }
 }
 /* ============================================================
    CERTIFICATIONS & RESPONSIVE PHONE FIX FOR LIGHTBOX
@@ -1076,11 +1085,6 @@ body.nav-open { overflow: hidden; }
     .resume-card { justify-content: center; text-align: center; }
     .resume-card-info { min-width: 100%; }
     .resume-download-btn { width: 100%; }
-}
-
-/* Preview overlay: slightly tighter padding on phones */
-@media (max-width: 480px) {
-    .image-preview-container { padding: 1rem; }
 }
 
 .hero-pills{

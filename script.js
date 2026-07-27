@@ -131,30 +131,39 @@ if (scrollTopBtn) {
 
 /* ============================================================
    PROJECT CARD PREVIEW ENGINE
+   (shows a screen-centered preview overlay, smaller than the
+   certificate lightbox, on delayed hover / tap)
    ============================================================ */
 const PREVIEW_HOVER_DELAY = 2000;   // ms of hover before the image appears
 const PREVIEW_DISPLAY_TIME = 2500;  // ms the image stays visible once shown
 const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
+const previewOverlay = document.getElementById('project-preview-overlay');
+const previewOverlayImg = document.getElementById('project-preview-img');
+
 function attachPreviewTrigger(card, triggerEl, img) {
     let showTimer = null;
     let hideTimer = null;
+
+    const hidePreview = () => {
+        if (previewOverlay) previewOverlay.classList.remove('active');
+        card.classList.remove('show-preview');
+        hideTimer = null;
+    };
 
     const reveal = () => {
         clearTimeout(showTimer);
         clearTimeout(hideTimer);
         showTimer = null;
 
-        // Only one image should be visible inside a card at a time
-        card.querySelectorAll('.project-hover-img').forEach(i => i.classList.remove('active-preview'));
-        img.classList.add('active-preview');
+        if (previewOverlay && previewOverlayImg) {
+            previewOverlayImg.src = img.getAttribute('src');
+            previewOverlayImg.alt = img.getAttribute('alt') || 'Project Preview';
+            previewOverlay.classList.add('active');
+        }
         card.classList.add('show-preview');
 
-        hideTimer = setTimeout(() => {
-            card.classList.remove('show-preview');
-            img.classList.remove('active-preview');
-            hideTimer = null;
-        }, PREVIEW_DISPLAY_TIME);
+        hideTimer = setTimeout(hidePreview, PREVIEW_DISPLAY_TIME);
     };
 
     triggerEl.addEventListener('mouseenter', () => {
@@ -176,6 +185,13 @@ function attachPreviewTrigger(card, triggerEl, img) {
             e.preventDefault();
         }
         reveal();
+    });
+}
+
+if (previewOverlay) {
+    previewOverlay.addEventListener('click', () => {
+        previewOverlay.classList.remove('active');
+        document.querySelectorAll('.project-card.show-preview').forEach(c => c.classList.remove('show-preview'));
     });
 }
 
