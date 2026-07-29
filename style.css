@@ -338,6 +338,79 @@ header {
     border: 1px solid rgba(255,255,255,0.03);
 }
 
+/* ============================================================
+   FEATURED PROJECT CARDS
+   (terminal-panel layout for flagship projects — spans full grid
+   width, splits into content + code console, stacks on mobile)
+   ============================================================ */
+.project-card.featured {
+    grid-column: 1 / -1;
+}
+
+.featured-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .featured-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.featured-stats {
+    display: flex;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    margin: 1.3rem 0 1.5rem;
+}
+
+.featured-stat-value {
+    font-family: var(--code-font);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.featured-stat-value.stat-accent { color: var(--accent); }
+.featured-stat-value.stat-success { color: #10B981; }
+
+.featured-stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+.featured-console {
+    background-color: var(--terminal-bg);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    padding: 1.4rem;
+    font-family: var(--code-font);
+    font-size: 0.88rem;
+    min-width: 0;
+}
+
+.featured-console .console-title {
+    font-size: 0.75rem;
+}
+
+.featured-console .console-line {
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+    .featured-stats {
+        gap: 1.4rem;
+        margin: 1rem 0 1.2rem;
+    }
+    .featured-console {
+        padding: 1.1rem;
+        font-size: 0.82rem;
+    }
+}
+
 .dashboard-list {
     list-style: none;
     padding: 0;
