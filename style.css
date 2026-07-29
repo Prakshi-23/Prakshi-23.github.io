@@ -127,11 +127,11 @@ h1.hero-title {
 }
 
 .hero-p {
-    font-size: clamp(1rem, 3vw, 1.25rem);
+    font-size: clamp(0.8rem, 3vw, 1.25rem);
     color: var(--text-muted);
     max-width: 700px;
     margin-bottom: 3rem;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .inline-matrix-nav {
@@ -274,7 +274,7 @@ header {
 
 .project-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
     gap:2rem;
 }
 
