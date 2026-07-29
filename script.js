@@ -424,3 +424,34 @@ if (navLinkEls.length && window.IntersectionObserver) {
 
     navSections.forEach(section => spyObserver.observe(section));
 }
+/* ---- GA4 section-view tracking ----
+   Sends an event to Google Analytics each time a visitor scrolls a
+   section into view, plus how long they stayed on it.
+   Safe to delete this whole block anytime to stop tracking. */
+(function () {
+    if (typeof gtag !== 'function' || !window.IntersectionObserver) return;
+
+    const trackedSections = ['hero', 'experience', 'skills', 'projects', 'certifications', 'resume', 'contact'];
+    const sectionTimers = {};
+
+    const gaObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const id = entry.target.getAttribute('id');
+            if (entry.isIntersecting) {
+                sectionTimers[id] = Date.now();
+                gtag('event', 'section_view', { section_name: id });
+            } else if (sectionTimers[id]) {
+                const seconds = Math.round((Date.now() - sectionTimers[id]) / 1000);
+                if (seconds > 0) {
+                    gtag('event', 'section_time', { section_name: id, seconds_viewed: seconds });
+                }
+                delete sectionTimers[id];
+            }
+        });
+    }, { root: null, threshold: 0.5 });
+
+    trackedSections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) gaObserver.observe(el);
+    });
+})();
